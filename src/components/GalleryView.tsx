@@ -1,14 +1,8 @@
 import React from 'react';
 import { ImageIcon, Plus, Maximize, Download } from 'lucide-react';
-import { Button } from '../../components/Button';
+import { Button } from '@/components/Button';
 
-interface GeneratedMockup {
-  id: string;
-  imageUrl: string;
-  prompt: string;
-  createdAt: string;
-  layers?: any[];
-}
+import { GeneratedMockup } from '@/types';
 
 interface GalleryViewProps {
   mockups: GeneratedMockup[];

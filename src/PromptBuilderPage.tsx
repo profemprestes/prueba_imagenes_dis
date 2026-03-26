@@ -106,7 +106,7 @@ ${currentCode ? `\nESTADO ACTUAL / CÓDIGO:\n\`\`\`tsx\n${currentCode}\n\`\`\`` 
                   <Layout className="w-4 h-4 text-primary" />
                   Seleccionar Componente/Página
                 </label>
-                <Select onValueChange={setSelectedComponent} value={selectedComponent}>
+                <Select onValueChange={(val: any) => setSelectedComponent(val || "")} value={selectedComponent}>
                   <SelectTrigger className="bg-surface-low/50 border-none h-12 rounded-xl">
                     <SelectValue placeholder="Selecciona para mejorar..." />
                   </SelectTrigger>

@@ -1,14 +1,9 @@
 import React from 'react';
 import { Wand2, X, Shirt } from 'lucide-react';
-import { Button } from '../../components/Button';
-import { useStudioCanvas, PlacedLayer } from '../hooks/useStudioCanvas';
+import { Button } from '@/components/Button';
+import { useStudioCanvas, PlacedLayer } from '@/hooks/useStudioCanvas';
 
-interface Asset {
-  id: string;
-  type: 'product' | 'logo' | 'model3d';
-  name: string;
-  data: string;
-}
+import { Asset } from '@/types';
 
 interface StudioViewProps {
   assets: Asset[];

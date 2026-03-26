@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box, Wand2, Download, ArrowRight } from 'lucide-react';
+import { AppView } from '@/types';
 
 interface WorkflowStepperProps {
   currentView: string;
-  onViewChange: (view: string) => void;
+  onViewChange: (view: AppView) => void;
 }
 
 export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({ currentView, onViewChange }) => (
@@ -15,7 +16,7 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({ currentView, o
     ].map((step, i, arr) => (
       <React.Fragment key={step.id}>
         <div 
-          onClick={() => onViewChange(step.id)}
+          onClick={() => onViewChange(step.id as AppView)}
           className={`
             flex flex-col items-center gap-4 cursor-pointer group transition-all duration-700
             ${currentView === step.id ? 'scale-110' : 'opacity-40 hover:opacity-100'}

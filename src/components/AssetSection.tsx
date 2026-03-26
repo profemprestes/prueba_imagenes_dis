@@ -1,22 +1,20 @@
 import React from 'react';
 import { Trash2 } from 'lucide-react';
-import { FileUploader } from '../../components/FileUploader';
+import { FileUploader } from '@/components/FileUploader';
 
-interface Asset {
-  id: string;
-  type: 'product' | 'logo' | 'model3d';
-  name: string;
-  data: string;
-}
+import { Asset } from '@/types';
 
 interface AssetSectionProps {
+  description?: string;
   title: string;
-  icon: React.ReactNode;
-  type: 'product' | 'logo' | 'model3d';
+  icon?: React.ReactNode;
+  type?: 'product' | 'logo' | 'model3d';
   assets: Asset[];
-  onAdd: (asset: Asset) => void;
+  onAdd: (data: string) => void;
   onRemove: (id: string) => void;
-  onApiError: (error: any, operation: string, path: string) => void;
+  onApiError?: (error: any, operation: string, path: string) => void;
+  onSynthesize?: (prompt: string) => Promise<void>;
+  isGenerating?: boolean;
 }
 
 export const AssetSection: React.FC<AssetSectionProps> = ({ title, icon, type, assets, onAdd, onRemove, onApiError }) => {
@@ -56,7 +54,15 @@ export const AssetSection: React.FC<AssetSectionProps> = ({ title, icon, type, a
 
       <div className="mt-auto">
         <FileUploader 
-          onUpload={(data, name) => onAdd({ id: Math.random().toString(36).substr(2, 9), type, name, data })}
+          onFileSelect={(file) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              if (e.target?.result) {
+                onAdd(e.target.result as string);
+              }
+            };
+            reader.readAsDataURL(file);
+          }}
           accept={type === 'model3d' ? '.glb,.gltf' : 'image/*'}
           label={`Add ${title}`}
         />

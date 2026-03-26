@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { Zap, Sparkles, Check, Download } from 'lucide-react';
-import { Button } from '../../components/Button';
+import { Button } from '@/components/Button';
 
-interface Asset {
-  id: string;
-  type: 'product' | 'logo' | 'model3d';
-  name: string;
-  data: string;
-}
+import { Asset } from '@/types';
 
 interface ForgeViewProps {
   assets: Asset[];
