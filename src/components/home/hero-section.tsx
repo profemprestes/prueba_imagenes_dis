@@ -34,7 +34,7 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={containerRef} className="relative min-h-screen w-full overflow-hidden bg-background flex items-center pt-24 pb-12">
+    <section ref={containerRef} className="relative min-h-[100dvh] w-full overflow-hidden bg-background flex items-center pt-24 pb-12">
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <motion.div
@@ -144,14 +144,14 @@ export function HeroSection() {
           </motion.div>
 
           {/* Visual Showcase */}
-          <div className="relative flex justify-center items-center h-[600px] lg:h-[800px]">
+          <div className="relative flex justify-center items-center h-[400px] sm:h-[500px] md:h-[600px] lg:h-[800px]">
             {/* Main Image Card */}
             <motion.div
               style={{ rotate }}
               initial={{ y: 100, opacity: 0, scale: 0.9 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-              className="absolute w-[420px] aspect-[3/4] rounded-[3rem] overflow-hidden shadow-ambient border border-white/40 z-20 group"
+              className="absolute w-[280px] sm:w-[320px] md:w-[420px] aspect-[3/4] rounded-[3rem] overflow-hidden shadow-ambient border border-white/40 z-20 group"
             >
               <img 
                 src="https://picsum.photos/seed/luminous_hero/1200/1600" 
@@ -170,7 +170,7 @@ export function HeroSection() {
               initial={{ rotate: -12, y: 150, opacity: 0, scale: 0.8 }}
               animate={{ rotate: -8, y: 80, opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
-              className="absolute w-[380px] aspect-square rounded-[3rem] overflow-hidden shadow-ambient border border-white/20 z-10 brightness-95 translate-x-[-50%] group"
+              className="absolute w-[240px] sm:w-[280px] md:w-[380px] aspect-square rounded-[3rem] overflow-hidden shadow-ambient border border-white/20 z-10 brightness-95 translate-x-[-50%] group"
             >
               <img 
                 src="https://picsum.photos/seed/luminous_detail/1000/1000" 
@@ -187,7 +187,7 @@ export function HeroSection() {
                 rotate: [0, 5, 0]
               }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-20 right-0 lg:-right-12 z-30 bg-primary text-white p-8 rounded-[2.5rem] shadow-ambient flex flex-col items-center justify-center min-w-[140px]"
+              className="absolute bottom-4 sm:bottom-10 md:bottom-20 right-4 sm:right-0 lg:-right-12 z-30 bg-primary text-white p-4 sm:p-6 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] shadow-ambient flex flex-col items-center justify-center min-w-[100px] sm:min-w-[120px] md:min-w-[140px]"
             >
               <span className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">Desde</span>
               <span className="text-4xl font-black tracking-tighter">$2,499</span>
@@ -200,7 +200,7 @@ export function HeroSection() {
                 rotate: [0, -5, 0]
               }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute top-12 left-0 lg:-left-12 z-30 glass p-6 rounded-[2rem] border border-white/40 shadow-ambient flex items-center gap-4"
+              className="absolute top-4 sm:top-8 md:top-12 left-4 sm:left-0 lg:-left-12 z-30 glass p-3 sm:p-4 md:p-6 rounded-[1.5rem] sm:rounded-[2rem] border border-white/40 shadow-ambient flex items-center gap-2 sm:gap-4"
             >
               <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
                 <Sparkles size={24} />
