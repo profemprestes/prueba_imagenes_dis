@@ -13,7 +13,7 @@ export function HeroSection() {
   const y2 = useTransform(scrollY, [0, 500], [0, 150]);
   const rotate = useTransform(scrollY, [0, 500], [6, 12]);
 
-  const containerVariants = {
+  const containerVariants: any = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -24,7 +24,7 @@ export function HeroSection() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: any = {
     hidden: { y: 40, opacity: 0 },
     visible: { 
       y: 0, 

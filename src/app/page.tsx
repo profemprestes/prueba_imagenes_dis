@@ -1,30 +1,32 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { Layout, Box, Image as ImageIcon, Wand2, Layers, Plus, Trash2, Download, History, Sparkles, Shirt, Move, Maximize, RotateCcw, Zap, Cpu, ArrowRight, Globe, Scan, Camera, Aperture, Repeat, SprayCan, Triangle, Package, Menu, X, Check, MousePointer2 } from 'lucide-react';
-import { Button } from './components/Button';
-import { generateMockup, generateAsset, generatePrompts } from './services/geminiService';
-import { Asset, GeneratedMockup, AppView, LoadingState } from './types';
-import PromptBuilderPage from './PromptBuilderPage';
-import { Toaster } from './components/ui/sonner';
+import { Button } from '@/components/Button';
+import { generateMockup, generateAsset, generatePrompts } from '@/services/geminiService';
+import { Asset, GeneratedMockup, AppView, LoadingState } from '@/types';
+import PromptBuilderPage from '@/PromptBuilderPage';
+import { Toaster } from '@/components/ui/sonner';
 
 // Import Home Components
-import { HeroSection } from './components/home/hero-section';
-import { BenefitsGrid } from './components/home/benefits-grid';
-import { FeaturedProducts } from './components/home/featured-products';
-import { PromoBanner } from './components/home/promo-banner';
-import { Newsletter } from './components/home/newsletter';
+import { HeroSection } from '@/components/home/hero-section';
+import { BenefitsGrid } from '@/components/home/benefits-grid';
+import { FeaturedProducts } from '@/components/home/featured-products';
+import { PromoBanner } from '@/components/home/promo-banner';
+import { Newsletter } from '@/components/home/newsletter';
 
 // Import Refactored Components
-import { IntroSequence } from './src/components/IntroSequence';
-import { NavButton } from './src/components/NavButton';
-import { WorkflowStepper } from './src/components/WorkflowStepper';
-import { AssetSection } from './src/components/AssetSection';
-import { ForgeView } from './src/components/ForgeView';
-import { StudioView } from './src/components/StudioView';
-import { DashboardView } from './src/components/DashboardView';
-import { GalleryView } from './src/components/GalleryView';
-import { Lightbox } from './src/components/Lightbox';
+import { IntroSequence } from '@/components/IntroSequence';
+import { NavButton } from '@/components/NavButton';
+import { WorkflowStepper } from '@/components/WorkflowStepper';
+import { AssetSection } from '@/components/AssetSection';
+import { ForgeView } from '@/components/ForgeView';
+import { StudioView } from '@/components/StudioView';
+import { DashboardView } from '@/components/DashboardView';
+import { GalleryView } from '@/components/GalleryView';
+import { Lightbox } from '@/components/Lightbox';
 
-import '@google/model-viewer';
+// import '@google/model-viewer';
 
 const App: React.FC = () => {
   const [view, setView] = useState<AppView>('dashboard');
@@ -213,7 +215,7 @@ const App: React.FC = () => {
                   title="Product Foundry" 
                   description="Base merchandise for optical synthesis." 
                   assets={assets.filter(a => a.type === 'product')} 
-                  onAdd={(data) => handleAddAsset({ id: Math.random().toString(36).substr(2, 9), type: 'product', name: 'Product', data, mimeType: 'image/png' })}
+                  onAdd={(data: any) => handleAddAsset({ id: Math.random().toString(36).substr(2, 9), type: 'product', name: 'Product', data, mimeType: 'image/png' })}
                   onRemove={handleRemoveAsset}
                   onSynthesize={(p) => handleSynthesizeAsset('product', p)}
                   isGenerating={loading.isGenerating}
@@ -222,7 +224,7 @@ const App: React.FC = () => {
                   title="Identifier Forge" 
                   description="Logos and brand marks for projection." 
                   assets={assets.filter(a => a.type === 'logo')} 
-                  onAdd={(data) => handleAddAsset({ id: Math.random().toString(36).substr(2, 9), type: 'logo', name: 'Logo', data, mimeType: 'image/png' })}
+                  onAdd={(data: any) => handleAddAsset({ id: Math.random().toString(36).substr(2, 9), type: 'logo', name: 'Logo', data, mimeType: 'image/png' })}
                   onRemove={handleRemoveAsset}
                   onSynthesize={(p) => handleSynthesizeAsset('logo', p)}
                   isGenerating={loading.isGenerating}
@@ -231,7 +233,7 @@ const App: React.FC = () => {
                   title="Spatial Models" 
                   description="3D geometries for multi-angle visualization." 
                   assets={assets.filter(a => a.type === 'model3d')} 
-                  onAdd={(data) => handleAddAsset({ id: Math.random().toString(36).substr(2, 9), type: 'model3d', name: '3D Model', data, mimeType: 'model/gltf-binary' })}
+                  onAdd={(data: any) => handleAddAsset({ id: Math.random().toString(36).substr(2, 9), type: 'model3d', name: '3D Model', data, mimeType: 'model/gltf-binary' })}
                   onRemove={handleRemoveAsset}
                   onSynthesize={(p) => handleSynthesizeAsset('model3d', p)}
                   isGenerating={loading.isGenerating}

@@ -99,7 +99,7 @@ export function FeaturedProducts() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: any = {
     hidden: { y: 30, opacity: 0 },
     visible: { 
       y: 0, 

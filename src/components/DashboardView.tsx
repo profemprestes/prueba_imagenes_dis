@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Wand2, Download, ArrowRight } from 'lucide-react';
-import { Button } from '../../components/Button';
+import { Button } from '@/components/Button';
 
 interface DashboardViewProps {
   onEnterForge: () => void;
