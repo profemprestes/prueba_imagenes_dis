@@ -1,144 +1,230 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Sparkles, Zap, Star } from 'lucide-react';
+import { useRef } from 'react';
 
 export function HeroSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  
+  // Parallax effects for background and elements
+  const y1 = useTransform(scrollY, [0, 500], [0, -100]);
+  const y2 = useTransform(scrollY, [0, 500], [0, 150]);
+  const rotate = useTransform(scrollY, [0, 500], [6, 12]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 40, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
   return (
-    <section className="relative min-h-[90vh] w-full overflow-hidden bg-background flex items-center pt-20">
-      {/* Background Effects */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+    <section ref={containerRef} className="relative min-h-screen w-full overflow-hidden bg-background flex items-center pt-24 pb-12">
+      {/* Background Decorative Elements */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <motion.div
-          animate={{ 
-            y: [0, -30, 0], 
-            opacity: [0.2, 0.4, 0.2],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 right-[5%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"
+          style={{ y: y1 }}
+          className="absolute -top-[10%] -right-[5%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[140px]"
         />
         <motion.div
-          animate={{ 
-            y: [0, 40, 0], 
-            opacity: [0.1, 0.3, 0.1],
-            scale: [1, 1.2, 1]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-1/4 left-1/4 w-[700px] h-[700px] bg-orange-500/5 rounded-full blur-[140px]"
+          style={{ y: y2 }}
+          className="absolute top-[40%] -left-[10%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]"
         />
+        
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-primary)_0.05,transparent_1px),linear-gradient(to_bottom,var(--color-primary)_0.05,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20" />
       </div>
 
-      <div className="container mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-        <div className="max-w-3xl">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 text-[10px] font-black tracking-[0.2em] uppercase rounded-full bg-primary/5 text-primary border border-primary/10 backdrop-blur-sm">
-              <Sparkles size={12} />
-              <span>Nueva Colección 2024</span>
-            </div>
-            
-            <h1 className="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-foreground mb-8 leading-[0.85] uppercase">
-              Renueva Tu <br />
-              <span className="bg-gradient-to-r from-primary via-orange-600 to-primary bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent italic">
-                Espacio
-              </span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-xl leading-relaxed font-medium">
-              Descubre muebles vibrantes y decoración de tendencia para hacer tu casa única. Precios increíbles, diseño excepcional.
-            </p>
-            
-            <div className="flex flex-wrap gap-6">
-              <a 
-                href="#" 
-                className="h-16 px-10 flex items-center bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-sm hover:shadow-[0_20px_40px_rgba(175,39,0,0.3)] hover:-translate-y-1 transition-all duration-500 group"
-              >
-                Comprar Ahora
-                <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-2" />
-              </a>
-              <a 
-                href="#" 
-                className="h-16 px-10 flex items-center border-2 border-outline-variant/10 bg-surface-lowest/40 backdrop-blur-xl rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-surface-lowest/60 hover:border-primary/20 transition-all duration-500"
-              >
-                Ver Colección
-              </a>
-            </div>
-
-            <div className="mt-16 flex items-center gap-8">
-              <div className="flex -space-x-4">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-12 h-12 rounded-full border-4 border-background bg-surface-low overflow-hidden">
-                    <img 
-                      src={`https://picsum.photos/seed/user${i}/100/100`} 
-                      alt="User" 
-                      className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                ))}
-              </div>
-              <div>
-                <p className="text-sm font-black uppercase tracking-widest text-foreground">5k+ Clientes Felices</p>
-                <p className="text-xs text-muted-foreground font-medium">Únete a nuestra comunidad vibrante</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        <div className="relative hidden lg:flex justify-center items-center h-[700px]">
-          <motion.div
-            initial={{ rotate: 12, y: 100, opacity: 0, scale: 0.8 }}
-            animate={{ rotate: 6, y: 0, opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute w-[400px] aspect-[3/4] rounded-[3rem] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.2)] border border-white/20 z-20 group"
-          >
-            <img 
-              src="https://picsum.photos/seed/interior1/800/1200" 
-              alt="Showcase" 
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-10">
-              <p className="text-white font-black uppercase tracking-widest text-lg">Sillón Nórdico</p>
-              <p className="text-white/60 text-sm font-medium">Desde $299.00</p>
-            </div>
-          </motion.div>
+      <div className="container mx-auto px-8 relative z-10">
+        <div className="grid lg:grid-cols-[1.2fr,1fr] gap-16 items-center">
           
-          <motion.div
-            initial={{ rotate: -12, y: 150, opacity: 0, scale: 0.8 }}
-            animate={{ rotate: -6, y: 60, opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="absolute w-[350px] aspect-square rounded-[3rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.15)] border border-white/10 z-10 brightness-90 translate-x-[-45%] group"
+          {/* Text Content */}
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col items-start"
           >
-            <img 
-              src="https://picsum.photos/seed/interior2/800/800" 
-              alt="Branding" 
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
-              referrerPolicy="no-referrer"
-            />
+            <motion.div variants={itemVariants} className="flex flex-col mb-8">
+              <span className="text-[10px] font-black tracking-[0.4em] uppercase text-primary mb-3">
+                Luminous Merchant — Est. 2024
+              </span>
+              <div className="h-px w-12 bg-primary/30" />
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="relative">
+              <div className="absolute -top-12 -left-8 text-primary/10 select-none hidden md:block">
+                <Zap size={120} strokeWidth={1} />
+              </div>
+              <h1 className="display-lg text-foreground mb-8 uppercase">
+                Vibrante <br />
+                <span className="relative inline-block">
+                  <span className="bg-gradient-to-r from-primary via-primary-container to-primary bg-[length:200%_auto] animate-gradient-slow bg-clip-text text-transparent italic pr-4">
+                    Esencia
+                  </span>
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: '100%' }}
+                    transition={{ delay: 1.2, duration: 1, ease: "easeInOut" }}
+                    className="absolute -bottom-2 left-0 h-3 bg-primary/10 -z-10"
+                  />
+                </span>
+              </h1>
+            </motion.div>
+            
+            <motion.p variants={itemVariants} className="text-xl md:text-2xl text-foreground/70 mb-12 max-w-xl leading-relaxed font-medium">
+              Curaduría experta de mobiliario que transforma lo cotidiano en algo extraordinario. Diseño con alma, espacios con luz.
+            </motion.p>
+            
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-6">
+              <a 
+                href="#" 
+                className="btn-primary group"
+              >
+                <span className="relative z-10 flex items-center">
+                  Explorar Catálogo
+                  <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-2" />
+                </span>
+              </a>
+              <a 
+                href="#" 
+                className="btn-glass border border-primary/10 hover:bg-white/60 hover:border-primary/30"
+              >
+                Nuestra Historia
+              </a>
+            </motion.div>
+
+            {/* Trust Badges */}
+            <motion.div variants={itemVariants} className="mt-20 flex flex-wrap items-center gap-12">
+              <div className="flex items-center gap-4">
+                <div className="flex -space-x-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-background bg-surface-low overflow-hidden shadow-sm">
+                      <img 
+                        src={`https://picsum.photos/seed/lm_user${i}/80/80`} 
+                        alt="User" 
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-col">
+                  <div className="flex text-primary">
+                    {[1, 2, 3, 4, 5].map((s) => <Star key={s} size={10} fill="currentColor" />)}
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Top Rated Merchant</span>
+                </div>
+              </div>
+
+              <div className="h-8 w-px bg-primary/10 hidden sm:block" />
+
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary">
+                  <Zap size={20} />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-foreground/60">Envío Express Global</span>
+              </div>
+            </motion.div>
           </motion.div>
 
-          {/* Floating Element */}
-          <motion.div
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-20 right-0 z-30 glass p-6 rounded-3xl border border-white/20 shadow-2xl"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/30">
+          {/* Visual Showcase */}
+          <div className="relative flex justify-center items-center h-[600px] lg:h-[800px]">
+            {/* Main Image Card */}
+            <motion.div
+              style={{ rotate }}
+              initial={{ y: 100, opacity: 0, scale: 0.9 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+              className="absolute w-[420px] aspect-[3/4] rounded-[3rem] overflow-hidden shadow-ambient border border-white/40 z-20 group"
+            >
+              <img 
+                src="https://picsum.photos/seed/luminous_hero/1200/1600" 
+                alt="Editorial Showcase" 
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-12">
+                <p className="text-white font-black uppercase tracking-[0.2em] text-xs mb-2">Featured Collection</p>
+                <h3 className="text-white font-display text-4xl font-black italic tracking-tighter">Radiant Living</h3>
+              </div>
+            </motion.div>
+            
+            {/* Secondary Image Card */}
+            <motion.div
+              initial={{ rotate: -12, y: 150, opacity: 0, scale: 0.8 }}
+              animate={{ rotate: -8, y: 80, opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
+              className="absolute w-[380px] aspect-square rounded-[3rem] overflow-hidden shadow-ambient border border-white/20 z-10 brightness-95 translate-x-[-50%] group"
+            >
+              <img 
+                src="https://picsum.photos/seed/luminous_detail/1000/1000" 
+                alt="Detail View" 
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+
+            {/* Floating Price Tag */}
+            <motion.div
+              animate={{ 
+                y: [0, -15, 0],
+                rotate: [0, 5, 0]
+              }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-20 right-0 lg:-right-12 z-30 bg-primary text-white p-8 rounded-[2.5rem] shadow-ambient flex flex-col items-center justify-center min-w-[140px]"
+            >
+              <span className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">Desde</span>
+              <span className="text-4xl font-black tracking-tighter">$2,499</span>
+            </motion.div>
+
+            {/* Floating Brand Badge */}
+            <motion.div
+              animate={{ 
+                y: [0, 20, 0],
+                rotate: [0, -5, 0]
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute top-12 left-0 lg:-left-12 z-30 glass p-6 rounded-[2rem] border border-white/40 shadow-ambient flex items-center gap-4"
+            >
+              <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
                 <Sparkles size={24} />
               </div>
               <div>
-                <p className="text-xs font-black uppercase tracking-widest text-on-surface/40">Calidad Premium</p>
-                <p className="text-sm font-bold text-foreground">Diseño Certificado</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Curated by</p>
+                <p className="text-sm font-black text-foreground uppercase tracking-tighter">Radiant Team</p>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <span className="text-[8px] font-black uppercase tracking-[0.4em] text-foreground/30">Scroll</span>
+        <div className="w-px h-12 bg-gradient-to-b from-primary/40 to-transparent" />
+      </motion.div>
     </section>
+
   );
 }

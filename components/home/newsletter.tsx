@@ -1,52 +1,84 @@
 "use client";
 
-import { ArrowRight, Mail } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Mail, Sparkles } from "lucide-react";
 
 export function Newsletter() {
   return (
-    <section className="py-24 px-8 max-w-7xl mx-auto mt-12 mb-20">
-      <div className="bg-surface-low rounded-[3rem] p-12 md:p-24 text-center flex flex-col items-center justify-center relative overflow-hidden min-h-[500px] shadow-ambient group border border-outline-variant/10">
-        {/* Decorative blobs */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px] translate-x-1/2 translate-y-1/2 opacity-50"></div>
-        
-        <div className="relative z-10 max-w-3xl w-full">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-3xl text-primary mb-10 shadow-inner border border-primary/10">
-            <Mail size={32} />
+    <section className="py-32 px-8 bg-background">
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-white rounded-[4rem] p-12 md:p-24 text-center flex flex-col items-center justify-center relative overflow-hidden min-h-[600px] shadow-ambient border border-primary/5 group">
+          {/* Decorative Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.05, 0.1, 0.05]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-1/2 -left-1/4 w-full h-full bg-primary rounded-full blur-[140px]"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:30px_30px]" />
           </div>
           
-          <h2 className="text-5xl md:text-6xl font-black text-foreground mb-6 leading-tight uppercase tracking-tighter">
-            Únete a la familia
-          </h2>
-          <p className="text-muted-foreground text-xl mb-12 max-w-lg mx-auto font-medium leading-relaxed">
-            Suscríbete para recibir inspiración, ofertas exclusivas y un <span className="text-primary font-black">10% de descuento</span> en tu primera compra.
-          </p>
-          
-          {/* Unified Input Pill */}
-          <form 
-            className="flex flex-col sm:flex-row w-full max-w-xl mx-auto gap-4"
-            onSubmit={(e) => e.preventDefault()}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 max-w-3xl w-full"
           >
-            <div className="relative flex-grow group/input">
-              <input 
-                className="w-full bg-surface-lowest rounded-2xl border-2 border-outline-variant/10 focus:border-primary/40 focus:ring-0 text-foreground px-8 py-5 placeholder:text-muted-foreground font-bold text-lg transition-all outline-none" 
-                placeholder="Tu correo electrónico..." 
-                required 
-                type="email"
-              />
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-primary/5 rounded-[2rem] text-primary mb-12 shadow-inner border border-primary/10 group-hover:rotate-12 transition-transform duration-700">
+              <Mail size={40} strokeWidth={1.5} />
             </div>
-            <button 
-              className="h-16 px-10 flex items-center justify-center bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-500 group/btn" 
-              type="submit"
+            
+            <span className="text-[10px] font-black tracking-[0.4em] uppercase text-primary mb-6 block">
+              Comunidad Luminous
+            </span>
+
+            <h2 className="display-lg text-foreground mb-8 leading-[0.85] uppercase tracking-tighter">
+              Únete a la <br />
+              <span className="italic text-primary">Inspiración</span>
+            </h2>
+            
+            <p className="text-foreground/60 text-xl md:text-2xl mb-16 max-w-xl mx-auto font-medium leading-relaxed">
+              Suscríbete para recibir curaduría exclusiva, lanzamientos limitados y un <span className="text-primary font-black">10% de cortesía</span> en tu primera pieza.
+            </p>
+            
+            {/* Unified Input Pill */}
+            <form 
+              className="flex flex-col sm:flex-row w-full max-w-2xl mx-auto gap-4"
+              onSubmit={(e) => e.preventDefault()}
             >
-              Suscribirse
-              <ArrowRight className="ml-2 size-5 transition-transform group-hover/btn:translate-x-2" />
-            </button>
-          </form>
-          
-          <p className="mt-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-50">
-            Respetamos tu privacidad. Cancela en cualquier momento.
-          </p>
+              <div className="relative flex-grow group/input">
+                <input 
+                  className="input-field w-full px-10 py-6" 
+                  placeholder="Tu correo electrónico..." 
+                  required 
+                  type="email"
+                />
+              </div>
+              <button 
+                className="btn-primary h-[76px] px-12 flex items-center justify-center group/btn" 
+                type="submit"
+              >
+                Suscribirse
+                <ArrowRight className="ml-3 size-5 transition-transform group-hover/btn:translate-x-2" />
+              </button>
+            </form>
+            
+            <div className="mt-12 flex items-center justify-center gap-6">
+              <div className="flex items-center gap-2">
+                <Sparkles size={14} className="text-primary" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Sin Spam</span>
+              </div>
+              <div className="w-1 h-1 rounded-full bg-primary/20" />
+              <div className="flex items-center gap-2">
+                <Sparkles size={14} className="text-primary" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Cancela cuando quieras</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
